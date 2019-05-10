@@ -70,7 +70,7 @@ namespace Payment.Data
         {
             if (_SummFilterText != 0)
             {
-                _filters[2] = "tor.[Summ] = " + _SummFilterText + "";
+                _filters[2] = "tor.[Summ] = " + _SummFilterText.ToString().Replace(',','.') + "";
             }
             else
             {

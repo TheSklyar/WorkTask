@@ -114,9 +114,15 @@ namespace Helpers.Common
         }
 
         private static readonly Regex _regex = new Regex("^[0-9]+$");
+        private static readonly Regex _regexDec = new Regex("^[0-9.]+$");
+            
         public static bool IsTextAllowed(string text)
         {
             return !_regex.IsMatch(text);
+        }
+        public static bool IsTextAllowedDecimal(string text)
+        {
+            return !_regexDec.IsMatch(text);
         }
     }
 

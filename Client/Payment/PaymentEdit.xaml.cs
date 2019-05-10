@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Helpers.Common;
 using Helpers.Enums;
+using Payment.Data;
 
 namespace Payment
 {
@@ -30,15 +31,24 @@ namespace Payment
             InitializeComponent();
             if (type == OpenType.View)
             {
-                
+                AddButton.Visibility = Visibility.Hidden;
+                IDField.Text = id.ToString();
             }
             else
             {
-                
+                AddButton.Visibility = Visibility.Visible;
+                if (id != 0)
+                {
+                    IDField.Text = id.ToString();
+                }
             }
             if (type != OpenType.New)
             {
                 FillData(id);
+            }
+            else
+            {
+                SummField.Text = "0";
             }
         }
 
@@ -46,5 +56,12 @@ namespace Payment
         {
             throw new NotImplementedException();
         }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+        
+    }
+        public Dictionary<string, Pay> Pays = new Dictionary<string, Pay>();
+        public Dictionary<string, DockPanel> PayPanels = new Dictionary<string, DockPanel>();
     }
 }

@@ -70,7 +70,7 @@ namespace Money.Data
         {
             if (_SummFilterText != 0)
             {
-                _filters[3] = "tor.[Summ] = " + _SummFilterText + "";
+                _filters[3] = "tor.[Summ] = " + _SummFilterText.ToString().Replace(',', '.') + "";
             }
             else
             {
@@ -93,7 +93,7 @@ namespace Money.Data
         {
             if (_SummPayedFilterText != 0)
             {
-                _filters[4] = "tor.[SummRest] = " + _SummPayedFilterText + "";
+                _filters[4] = "tor.[SummRest] = " + _SummPayedFilterText.ToString().Replace(',', '.') + "";
             }
             else
             {

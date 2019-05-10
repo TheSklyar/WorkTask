@@ -42,5 +42,11 @@ delete from  [dbo].[tPayments] where ID=@DelID";
         internal static string GetAllIDsByMoney = @"
             SELECT distinct ID FROM [dbo].[tPaymentMO] where MoneyID=@ID
             ";
+
+        internal static string GetMoneyByID = @"select [Summ]
+      ,[SummRest] from dbo.tMoney where ID=@ID";
+
+        internal static string GetOrderByID = @"select [Summ]
+      ,[SummPayed] from dbo.tOrders where ID=@ID";
     }
 }

@@ -59,6 +59,9 @@
   <ItemGroup>
     <Compile Include="Bootstrap\PaymentInstaller.cs" />
     <Compile Include="Bootstrap\PaymentService.cs" />
+    <Compile Include="Data\Money.cs" />
+    <Compile Include="Data\Order.cs" />
+    <Compile Include="Data\Payment.cs" />
     <Compile Include="Data\PaymentsFilter.cs" />
     <Compile Include="Data\SqlCommands.cs" />
     <Compile Include="PaymentEdit.xaml.cs">

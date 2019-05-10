@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Payment"
         mc:Ignorable="d"
-        Title="PaymentEdit" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Платеж" Height="655" Width="705">
+    <StackPanel>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="ID" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="2,7,0,7"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Name="IDField" Width="90" TextAlignment="Center" FontSize="12" HorizontalAlignment="Left" Margin="2" IsReadOnly="True"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text="Сумма" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2,7,0,7"/>
+            <TextBox Grid.Column="3" Grid.Row="0"  IsReadOnly="True" HorizontalAlignment="Left" Name="SummField" FontSize="12" Width="150" Margin="2"/>
+
+        </Grid>
+        <Border BorderBrush="LightGray" BorderThickness="2" HorizontalAlignment="Left" Margin="5">
+            <StackPanel>
+                <Label Content="Оплаты" FontSize="12" />
+                <ListView Name="PayList" Height="500" Width="670" Margin="5"/>
+                <Button Name="AddButton"  Content="Добавить" FontSize="12" Width="200" Height="25" Margin="2"  HorizontalAlignment="Left" Click="AddButton_Click" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
 </Window>

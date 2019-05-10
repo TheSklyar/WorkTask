@@ -27,7 +27,7 @@
                                     <Label Content="Номер" FontSize="12"/>
                                     <TextBox Text="{Binding NumberFilterText}" Height="25" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="300"  MaxWidth="300"  Margin="2"/>
                                     <Label Content="Сумма" FontSize="12"/>
-                                    <TextBox Text="{Binding SummFilterText}" Height="25" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="300"  MaxWidth="300"  Margin="2"/>
+                                    <TextBox Text="{Binding SummFilterText}" Height="25" PreviewTextInput="PreviewTextInputOnlyNumbersDec" DataObject.Pasting="TextBoxPastingOnlyNumbersDec" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="300"  MaxWidth="300"  Margin="2"/>
                                 </StackPanel>
                             </Border>
                             <Border BorderBrush="LightGray" BorderThickness="2" Margin="5,0,5,5" HorizontalAlignment="Left" >

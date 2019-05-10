@@ -193,10 +193,31 @@ namespace Order
 
         private void PreviewTextInputOnlyNumbers(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = Extensions.IsTextAllowed(e.Text);
+            e.Handled = Extensions.IsTextAllowedDecimal(e.Text);
         }
 
         private void TextBoxPastingOnlyNumbers(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                if (Extensions.IsTextAllowedDecimal(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private void PreviewTextInputOnlyNumbersInt(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = Extensions.IsTextAllowed(e.Text);
+        }
+
+        private void TextBoxPastingOnlyNumbersInt(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
             {

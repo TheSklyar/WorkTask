@@ -86,7 +86,7 @@ namespace Order
 
         private void PreviewTextInputOnlyNumbers(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = Extensions.IsTextAllowed(e.Text);
+            e.Handled = Extensions.IsTextAllowedDecimal(e.Text);
         }
 
         private void TextBoxPastingOnlyNumbers(object sender, DataObjectPastingEventArgs e)
@@ -94,7 +94,7 @@ namespace Order
             if (e.DataObject.GetDataPresent(typeof(String)))
             {
                 String text = (String)e.DataObject.GetData(typeof(String));
-                if (Extensions.IsTextAllowed(text))
+                if (Extensions.IsTextAllowedDecimal(text))
                 {
                     e.CancelCommand();
                 }
