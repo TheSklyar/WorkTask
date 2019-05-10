@@ -27,7 +27,7 @@
                                     <Label Content="Номер" FontSize="12"/>
                                     <DockPanel Margin="5,0,0,5" Height="25">
                                         <DockPanel Margin="0,0,10,0">
-                                            <TextBox Text="{Binding NumberFilterText}" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MinWidth="300"  MaxWidth="300"  Margin="2"/>
+                                            <TextBox Text="{Binding NumberFilterText}" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="300"  MaxWidth="300"  Margin="2"/>
                                         </DockPanel>
                                     </DockPanel>
                                 </StackPanel>
@@ -37,7 +37,7 @@
                                     <Label Content="Дата" FontSize="12" />
                                     <DockPanel Margin="5,0,0,5" Height="25" HorizontalAlignment="Left">
                                         <ComboBox SelectedIndex="{Binding DateFilterType}" Width="70" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  Margin="2">
-                                            <Label Content="Равны" FontSize="12"/>
+                                            <Label Content="Равна" FontSize="12"/>
                                             <Label Content="Больше" FontSize="12"/>
                                             <Label Content="Меньше" FontSize="12"/>
                                             <Label Content="Между" FontSize="12"/>
@@ -55,9 +55,9 @@
                                     <DockPanel Margin="5,0,0,5" Height="25">
                                         <DockPanel Margin="0,0,10,0" HorizontalAlignment="Left">
                                             <Label Content="Сумма" FontSize="12"/>
-                                            <TextBox Text="{Binding SummFilterText}" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MinWidth="300"  MaxWidth="300"  Margin="2"/>
+                                            <TextBox Text="{Binding SummFilterText}" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="300"  MaxWidth="300"  Margin="2"/>
                                             <Label Content="Сумма оплаты" FontSize="12"/>
-                                            <TextBox Text="{Binding SummPayedFilterText}" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MinWidth="300"  MaxWidth="300"  Margin="2"/>
+                                            <TextBox Text="{Binding SummPayedFilterText}" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" TextWrapping="WrapWithOverflow" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="300"  MaxWidth="300"  Margin="2"/>
                                         </DockPanel>
                                     </DockPanel>
                                 </StackPanel>

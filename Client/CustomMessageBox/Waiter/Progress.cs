@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Helpers.Waiter
 {
-    public static class Progress
+    static class Progress
     {
         private static Window win;
         public static void Start(Window owner)

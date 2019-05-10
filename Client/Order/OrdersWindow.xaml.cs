@@ -105,7 +105,12 @@ namespace Order
 
         public void SetFiltersToNull()
         {
-
+            Filter.NumberFilterText = "";
+            Filter.SummFilterText = "";
+            Filter.SummPayedFilterText = "";
+            Filter.DateFilterType = 0;
+            Filter.DateTime1 = null;
+            Filter.DateTime2 = null;
         }
 
         public void UpdateGrid()
@@ -243,14 +248,12 @@ namespace Order
                         }
 
                         _connection.Open();
-                        if (command.ExecuteScalar() is null)
+                        if (0==command.ExecuteNonQuery())
                         {
-                            MessageBox.Show(
-                                "Внимание! Данный заказ используется в платеже и не может быть удален без освобождения!");
+                            MessageBox.Show("Внимание! Данный заказ используется в платеже и не может быть удален без освобождения!");
                         }
                         _connection.Close();
                     }
-
                     UpdatePageCount();
                     UpdateGrid();
                 }
