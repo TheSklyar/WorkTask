@@ -24,8 +24,6 @@ namespace Helpers.Logon
     {
         public string AppName = "";
         public string connectionString = "";
-        private const string SqlStrConnection = "server={0};uid={1};pwd={2};database={3};Application Name={4}";
-        private const string WinStrConnection = "server={0};database={1};Integrated Security=true;Application Name={2}";
         public LogonDlg()
         {
             InitializeComponent();
@@ -66,8 +64,13 @@ namespace Helpers.Logon
             {
                 openFileDialog.InitialDirectory = new FileInfo(path.Text).DirectoryName;
             }
+
             if (openFileDialog.ShowDialog() == true)
+            {
                 this.SetAlias(openFileDialog.FileName, string.Empty);
+                this.path.Text = openFileDialog.FileName;
+            }
+                
         }
 
         private void OKClick(object sender, RoutedEventArgs e)

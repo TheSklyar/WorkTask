@@ -21,7 +21,11 @@ namespace Helpers.Common
             return configValue;
         }
 
-
+        public static string PrepareStringToConvert(string input)
+        {
+            return input.Replace(" ", "").Replace(',', '.').
+                Replace('.', System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
+        }
 
         private const LifestyleType DefaultLifestyleType = LifestyleType.Transient;
         public static void Register<TImplementation>(

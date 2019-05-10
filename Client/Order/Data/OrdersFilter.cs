@@ -61,7 +61,7 @@ namespace Order.Data
             get => _SummFilterText == 0 ? "" : _SummFilterText.ToString();
             set
             {
-                _SummFilterText = Convert.ToDecimal(PrepareStringToConvert(string.IsNullOrEmpty(value) ? "0" : value));
+                _SummFilterText = Convert.ToDecimal(Extensions.PrepareStringToConvert(string.IsNullOrEmpty(value) ? "0" : value));
                 SummFilterTextForm();
                 OnPropertyChanged();
             }
@@ -84,7 +84,7 @@ namespace Order.Data
             get => _SummPayedFilterText == 0 ? "" : _SummPayedFilterText.ToString();
             set
             {
-                _SummPayedFilterText = Convert.ToDecimal(PrepareStringToConvert(string.IsNullOrEmpty(value) ? "0" : value));
+                _SummPayedFilterText = Convert.ToDecimal(Extensions.PrepareStringToConvert(string.IsNullOrEmpty(value) ? "0" : value));
                 SummPayedFilterTextForm();
                 OnPropertyChanged();
             }
@@ -100,11 +100,7 @@ namespace Order.Data
                 _filters[4] = "";
             }
         }
-        public string PrepareStringToConvert(string input)
-        {
-            return input.Replace(" ", "").Replace(',', '.').
-                Replace('.', System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
-        }
+        
         private int _DateFilterType;
 
         public int DateFilterType
