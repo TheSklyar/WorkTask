@@ -1,0 +1,1 @@
+insert into dbo.tRevisionLog values ('CHANGE_VERSION', 'APPLICATION', '1.0.0.0')

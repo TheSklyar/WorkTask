@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<connections>
+   <machine alias="TestDB">
+      <server>localhost</server>
+      <database>TestDB</database>
+   </machine>
+   <machine alias="TestDB_2">
+      <server>localhost</server>
+      <database>TestDB</database>
+   </machine>
+</connections>
