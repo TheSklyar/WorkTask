@@ -33,9 +33,11 @@ namespace Money
         private SqlCommand _BufCommand;
         private int displayIndex;
         private MoneyFilter Filter;
+        private bool fromOtherView = false;
         private ListSortDirection listSortDirection;
-        public MoneyWindow(ConnectionSettings connectionSettings)
+        public MoneyWindow(ConnectionSettings connectionSettings, bool fromOtherView = false)
         {
+            this.fromOtherView = fromOtherView;
             _connectionSettings = Guard.GetNotNull(connectionSettings, "connectionSettings");
             InitializeComponent();
             Filter = new MoneyFilter(connectionSettings);
@@ -91,6 +93,13 @@ namespace Money
         {
             if (sender is DataGridRow row)
             {
+
+                if (fromOtherView)
+                {
+                    TemporaryStorage.Holder.Add("ID", ((DataRowView)row.Item).Row.ItemArray[1].ToString());
+                    this.Close();
+                    return;
+                }
                 var edt = new MoneyEdit(_connectionSettings, OpenType.View, Convert.ToInt32(((DataRowView)row.Item).Row.ItemArray[1].ToString()));
                 edt.Owner = this;
                 edt.ShowDialog();

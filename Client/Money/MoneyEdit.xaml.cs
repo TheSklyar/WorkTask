@@ -137,7 +137,7 @@ namespace Money
 
                     if (!command.Parameters.Contains("@SummPayed"))
                     {
-                        command.Parameters.AddWithValue("@SummPayed", (oldPayed + (oldSumm + newsumm)) < 0 ? 0 : (oldPayed + (oldSumm + newsumm)));
+                        command.Parameters.AddWithValue("@SummPayed", (oldPayed + (oldSumm - newsumm)) > newsumm ? newsumm : (oldPayed + (oldSumm - newsumm)));
                     }
                     _connection.Open();
                     count = command.ExecuteNonQuery();
@@ -174,7 +174,7 @@ namespace Money
 
                     if (!command.Parameters.Contains("@SummPayed"))
                     {
-                        command.Parameters.AddWithValue("@SummPayed", 0);
+                        command.Parameters.AddWithValue("@SummPayed", newsumm);
                     }
                     _connection.Open();
                     count = command.ExecuteNonQuery();

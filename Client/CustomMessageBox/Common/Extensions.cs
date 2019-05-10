@@ -120,5 +120,10 @@ namespace Helpers.Common
         }
     }
 
-    
+    public static class TemporaryStorage
+    {
+        public static Dictionary<string, string> Holder = new Dictionary<string, string>();
+    }
+
+
 }

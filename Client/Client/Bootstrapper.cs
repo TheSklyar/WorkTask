@@ -16,6 +16,7 @@ using Order.Bootstrap;
 using Helpers.Interfaces;
 using System.Windows;
 using Money.Bootstrap;
+using Payment.Bootstrap;
 
 namespace Client
 {
@@ -41,7 +42,7 @@ namespace Client
                .Install(new LauncherInstaller())
                .Install(new OrderInstaller())
                .Install(new MoneyInstaller())
-               //.Install(new PaymentInstaller())
+               .Install(new PaymentInstaller())
                ;
             
         }

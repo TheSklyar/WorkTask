@@ -1,14 +1,10 @@
-﻿using Helpers;
-using Helpers.Common;
-using Helpers.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,39 +14,76 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Helpers;
+using Helpers.Common;
+using Helpers.DB;
 using Helpers.Enums;
 using Helpers.Interfaces;
-using Order.Data;
-using Helpers.DB;
-using Helpers.Waiter;
+using Money;
+using Order;
+using Payment.Data;
 
-namespace Order
+namespace Payment
 {
     /// <summary>
-    /// Логика взаимодействия для OrdersWindow.xaml
+    /// Логика взаимодействия для PaymentsWindow.xaml
     /// </summary>
-    public partial class OrdersWindow : Window, IGridWindow
+    public partial class PaymentsWindow : Window, IGridWindow
     {
-
         private readonly ConnectionSettings _connectionSettings;
         private int _CurrentPage, _TotalPages;
         private SqlCommand _BufCommand;
         private int displayIndex;
-        private OrdersFilter Filter;
-        private bool fromOtherView = false;
+        private PaymentsFilter Filter;
         private ListSortDirection listSortDirection;
-        public OrdersWindow(ConnectionSettings connectionSettings, bool fromOtherView = false)
+        public PaymentsWindow(ConnectionSettings connectionSettings)
         {
             _connectionSettings = Guard.GetNotNull(connectionSettings, "connectionSettings");
             InitializeComponent();
-            Filter = new OrdersFilter(connectionSettings);
+            Filter = new PaymentsFilter(connectionSettings);
             DataContext = Filter;
             CountPages();
             InitTable();
             SetFiltersToNull();
-            this.fromOtherView = fromOtherView;
         }
 
+        private void Ord_click(object sender, RoutedEventArgs e)
+        {
+            var cds = new OrdersWindow(_connectionSettings, true);
+            cds.Owner = this;
+            cds.ShowDialog();
+            if (TemporaryStorage.Holder.TryGetValue("ID", out string ID))
+            {
+                SetFiltersToNull();
+                Filter.OrderNumFilterText = ID;
+                CountPages();
+                var _connection = new SqlConnection(_connectionSettings.ConnectionString);
+                listSortDirection = Order.SelectedIndex == 0 ? ListSortDirection.Ascending : ListSortDirection.Descending;
+                _BufCommand = new SqlCommand(DBHelper.FormSqlGrid(displayIndex, listSortDirection, Filter._filters, Filter.TableSourceForSort, SqlCommands.GridPart1, SqlCommands.GridByPagePart2), _connection);
+                _BufCommand.CommandTimeout = 30;
+                UpdateGrid();
+            }
+            TemporaryStorage.Holder.Remove("ID");
+        }
+
+        private void Mon_click(object sender, RoutedEventArgs e)
+        {
+            var cds = new MoneyWindow(_connectionSettings, true);
+            cds.Owner = this;
+            cds.ShowDialog();
+            if (TemporaryStorage.Holder.TryGetValue("ID", out string ID))
+            {
+                SetFiltersToNull();
+                Filter.MoneyNumFilterText = ID;
+                CountPages();
+                var _connection = new SqlConnection(_connectionSettings.ConnectionString);
+                listSortDirection = Order.SelectedIndex == 0 ? ListSortDirection.Ascending : ListSortDirection.Descending;
+                _BufCommand = new SqlCommand(DBHelper.FormSqlGrid(displayIndex, listSortDirection, Filter._filters, Filter.TableSourceForSort, SqlCommands.GridPart1, SqlCommands.GridByPagePart2), _connection);
+                _BufCommand.CommandTimeout = 30;
+                UpdateGrid();
+            }
+            TemporaryStorage.Holder.Remove("ID");
+        }
 
         public void InitTable()
         {
@@ -95,13 +128,7 @@ namespace Order
         {
             if (sender is DataGridRow row)
             {
-                if (fromOtherView)
-                {
-                    TemporaryStorage.Holder.Add("ID", ((DataRowView)row.Item).Row.ItemArray[1].ToString());
-                    this.Close();
-                    return;
-                }
-                var edt = new OrderEdit(_connectionSettings, OpenType.View, Convert.ToInt32(((DataRowView)row.Item).Row.ItemArray[1].ToString()));
+                var edt = new PaymentEdit(_connectionSettings, OpenType.View, Convert.ToInt32(((DataRowView)row.Item).Row.ItemArray[1].ToString()));
                 edt.Owner = this;
                 edt.ShowDialog();
                 UpdatePageCount();
@@ -113,10 +140,8 @@ namespace Order
         {
             Filter.NumberFilterText = "";
             Filter.SummFilterText = "";
-            Filter.SummPayedFilterText = "";
-            Filter.DateFilterType = 0;
-            Filter.DateTime1 = null;
-            Filter.DateTime2 = null;
+            Filter.MoneyNumFilterText = "";
+            Filter.OrderNumFilterText = "";
         }
 
         public void UpdateGrid()
@@ -214,7 +239,7 @@ namespace Order
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
-            var edt = new OrderEdit(_connectionSettings, OpenType.New);
+            var edt = new PaymentEdit(_connectionSettings, OpenType.New);
             edt.Owner = this;
             edt.ShowDialog();
             UpdatePageCount();
@@ -226,13 +251,11 @@ namespace Order
             if (UserGrid.SelectedItem != null)
             {
                 DataRowView row = UserGrid.SelectedItem as DataRowView;
-                var edt = new OrderEdit(_connectionSettings, OpenType.Edit, Convert.ToInt32(row.Row.ItemArray[1]));
+                var edt = new PaymentEdit(_connectionSettings, OpenType.Edit, Convert.ToInt32(row.Row.ItemArray[1]));
                 edt.Owner = this;
                 edt.ShowDialog();
                 UpdatePageCount();
                 UpdateGrid();
-
-
             }
         }
 
@@ -242,7 +265,7 @@ namespace Order
             {
                 DataRowView row = UserGrid.SelectedItem as DataRowView;
                 if (MessageBox.Show(
-                        "Вы уверены, что хотите удалить заказ " + row.Row.ItemArray[1].ToString() + "?",
+                        "Вы уверены, что хотите удалить платеж " + row.Row.ItemArray[1].ToString() + "?",
                         "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     var _connection = new SqlConnection(_connectionSettings.ConnectionString);
@@ -254,9 +277,9 @@ namespace Order
                         }
 
                         _connection.Open();
-                        if (0==command.ExecuteNonQuery())
+                        if (0 == command.ExecuteNonQuery())
                         {
-                            MessageBox.Show("Внимание! Данный заказ используется в платеже и не может быть удален без освобождения!");
+                            MessageBox.Show("Произошла ошибка при удалении");
                         }
                         _connection.Close();
                     }
@@ -265,5 +288,7 @@ namespace Order
                 }
             }
         }
+
+        
     }
 }
