@@ -29,18 +29,18 @@
                 </MenuItem>
             </Menu>
             <DockPanel Grid.Row="1">
-                <ListView Name="listViewServices"  ItemContainerStyle="{StaticResource itemstyle}"/>
+                <ListView Name="listViewServices" FontSize="20" ItemContainerStyle="{StaticResource itemstyle}"/>
             </DockPanel>
             <StatusBar Grid.Row="2" >
                 <StatusBarItem>
-                    <TextBlock Text="Сервер "/>
+                    <TextBlock Text="БД "/>
                     
                 </StatusBarItem>
                 <StatusBarItem>
                     <TextBox Name="statusDBName"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <TextBlock Text=" БД "/>
+                    <TextBlock Text=" Сервер "/>
 
                 </StatusBarItem>
                 <StatusBarItem>

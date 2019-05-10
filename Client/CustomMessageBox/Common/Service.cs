@@ -20,7 +20,7 @@ namespace Helpers.Common
 
         public override string ToString()
         {
-            return Name + " | " + Description;
+            return Name + "\t|\t" + Description;
         }
 
         public void Dispose()

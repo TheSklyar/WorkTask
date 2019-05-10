@@ -1,0 +1,43 @@
+﻿<Window x:Class="Money.MoneyEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Money"
+        mc:Ignorable="d"
+        Title="Деньги" 
+        ResizeMode="NoResize"
+        Height="190" Width="600" WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        ShowInTaskbar="False">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0">
+            <TextBlock Text="ID" FontSize="14" Margin="2"/>
+            <TextBox MaxLength="1" Name="ID" FontSize="14" Margin="2" Width="50"/>
+        </StackPanel>
+        <DockPanel Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="Дата" FontSize="14" Margin="2"/>
+                <DatePicker Name="DateVal" FontSize="14" Height="25" Margin="2" Width="170"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="Сумма" FontSize="14" Margin="2"/>
+                <TextBox MaxLength="8" Name="SummVal" Height="25" FontSize="14" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" Margin="2" Width="190"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="Остаток" FontSize="14" Margin="2"/>
+                <TextBox MaxLength="8" Name="SummValPayed" Height="25" PreviewTextInput="PreviewTextInputOnlyNumbers" DataObject.Pasting="TextBoxPastingOnlyNumbers" FontSize="14" Margin="2" Width="190"/>
+            </StackPanel>
+        </DockPanel>
+        <Button Content="Сохранить" Visibility="Visible" FontSize="14" Grid.Column="1" Grid.Row="2" Name="Save" Click="Button_Click" Margin="5"/>
+    </Grid>
+</Window>
