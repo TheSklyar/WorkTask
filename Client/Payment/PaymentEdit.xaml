@@ -26,9 +26,33 @@
         <Border BorderBrush="LightGray" BorderThickness="2" HorizontalAlignment="Left" Margin="5">
             <StackPanel>
                 <Label Content="Оплаты" FontSize="12" />
-                <ListView Name="PayList" Height="500" Width="670" Margin="5"/>
-                <Button Name="AddButton"  Content="Добавить" FontSize="12" Width="200" Height="25" Margin="2"  HorizontalAlignment="Left" Click="AddButton_Click" />
+                <ListView Name="PayList" Height="425" Width="670" Margin="5"/>
+                
             </StackPanel>
+
         </Border>
+        <DockPanel Margin="5">
+            <StackPanel>
+                <DockPanel  Margin="5,0,10,4"  HorizontalAlignment="Left">
+                    <TextBlock Text="№ Заказа" Width="75" FontSize="12" VerticalAlignment="Center"  Margin="2"/>
+                    <TextBox Name="OrderID" Height="25" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="100" MaxWidth="100" MaxLength="9" IsReadOnly="True"  Margin="2"/>
+                    <Button Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Выбрать" FontSize="12" Width="104"  Click="Ord_click"/>
+                    <TextBox Name="OrderInfo" Height="25" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="200" MaxWidth="200" MaxLength="9" IsReadOnly="True"  Margin="2"/>
+                </DockPanel>
+                <DockPanel Margin="5,0,10,4" HorizontalAlignment="Left">
+                    <TextBlock Text="№ Денег" Width="75" FontSize="12" VerticalAlignment="Center"  Margin="2"/>
+                    <TextBox Name="MoneyID" Height="25" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="100" MaxWidth="100" MaxLength="9" IsReadOnly="True"  Margin="2"/>
+                    <Button Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Выбрать" FontSize="12" Width="104"  Click="Mon_click"/>
+                    <TextBox Name="MoneyInfo" Height="25" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="200" MaxWidth="200" MaxLength="9" IsReadOnly="True"  Margin="2"/>
+                </DockPanel>
+                <DockPanel Margin="5,0,10,4" HorizontalAlignment="Left">
+                    <TextBlock Text="Сумма к оплате" Width="150" FontSize="12" VerticalAlignment="Center"  Margin="2"/>
+                    <TextBlock Text="⚠" Width="29" FontSize="20" TextAlignment="Center" MouseEnter="TextBox_MouseEnter"/>
+                    <TextBox Name="Summ" Height="25" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="104" MaxWidth="104" MaxLength="9"  Margin="2"/>
+                </DockPanel>
+            </StackPanel>
+            <Button Name="AddButton" VerticalAlignment="Bottom" Content="Добавить" FontSize="12" Width="150" Height="25" Margin="2"  HorizontalAlignment="Right" Click="AddButton_Click" />
+        </DockPanel>
+        
     </StackPanel>
 </Window>

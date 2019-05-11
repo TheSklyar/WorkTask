@@ -8,12 +8,11 @@ using Helpers.Common;
 
 namespace Payment.Data
 {
-    internal class Order
+    public class Order
     {
         public int ID { get; set; }
         public decimal Summ { get; set; }
         public decimal SummPayed { get; set; }
-        public override string ToString() { return this.ID + "\t|\t" + this.SummPay; }
         private ConnectionSettings _connectionSettings;
         public Order(ConnectionSettings connectionSettings, int id)
         {

@@ -11,14 +11,29 @@ namespace Payment.Data
 {
     public class Pay
     {
-        private Money m;
-        private Order o;
+        public Money m;
+        public Order o;
         public decimal SummPay { get; set; }
         public Button Button;
-        public Pay(ConnectionSettings connectionSettings, int monID, int ordID)
+        public override string ToString()
         {
-             m = new Money(connectionSettings, monID);
-             o = new Order(connectionSettings, ordID);
+            return oID + "|" + mID;
+        }
+
+        private int mID, oID;
+        public Pay(ConnectionSettings connectionSettings, int monID, int ordID, decimal summ)
+        {
+            mID = monID;
+            oID = ordID;
+            SummPay = summ;
+            m = new Money(connectionSettings, monID);
+            o = new Order(connectionSettings, ordID);
+            if (m.Summ==0 || o.Summ==0)
+            {
+                MessageBox.Show("Попытка добавить деньги или заказ с нулевой суммой!");
+                m = null;
+                o = null;
+            }
         }
         public DockPanel Create()
         {

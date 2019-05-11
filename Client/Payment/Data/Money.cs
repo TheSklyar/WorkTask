@@ -9,12 +9,11 @@ using Helpers.Common;
 
 namespace Payment.Data
 {
-    internal class Money
+    public class Money
     {
         public int ID { get; set; }
         public decimal Summ { get; set; }
         public decimal SummRest { get; set; }
-        public override string ToString() { return this.ID + "\t|\t" + this.SummPay; }
         private ConnectionSettings _connectionSettings;
         public Money(ConnectionSettings connectionSettings, int id)
         {
