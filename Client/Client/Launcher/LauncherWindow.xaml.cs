@@ -53,10 +53,10 @@ namespace Client
                 var processModule = Process.GetCurrentProcess().MainModule;
                 CommonSettings.AssVersion = processModule.FileVersionInfo.ProductVersion;
 
-                this.Title = string.Format(
-                    "Launcher ",
-                    CommonSettings.AssVersion,
-                    _settings.AppVersion);
+                this.Title = 
+                    "Загрузчик "+
+                    CommonSettings.AssVersion+" "+
+                    _settings.AppVersion;
             }
             catch (Exception ex)
             {

@@ -61,6 +61,7 @@ namespace Payment.Data
 
         public bool Save(int id)
         {
+            
             int res = 0;
             var _connection = new SqlConnection(_connectionSettings.ConnectionString);
             using (var command = new SqlCommand(SqlCommands.SaveItem, _connection))
@@ -82,13 +83,13 @@ namespace Payment.Data
                     command.Parameters.AddWithValue("@Summ", SummPay);
                 }
                 _connection.Open();
-                res = command.ExecuteNonQuery();
+                res = Convert.ToInt32(command.ExecuteScalar());
                 _connection.Close();
             }
 
             if (0 == res)
             {
-                MessageBox.Show("Внимание! Произошла ошибка при сохранении!");
+                MessageBox.Show("Внимание! Произошла ошибка при сохранении, возможно изменились параметры заказа или счета, перезагрузите их!");
                 return false;
             }
 

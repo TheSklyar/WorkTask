@@ -69,6 +69,7 @@ namespace Payment
             }
 
             Id = id;
+            IDField.Text = Id.ToString();
         }
 
         private void Reload()
@@ -143,7 +144,18 @@ namespace Payment
                 MessageBox.Show("Такой элемент уже есть в списке!");
                 return;
             }
-            if(tempPay.Save(Id))
+
+            if ((tempPay.o.Summ - tempPay.o.SummPayed) < tempPay.SummPay)
+            {
+                MessageBox.Show("Сумма оплаты больше, чем остаток по заказу");
+                return;
+            }
+            if ((tempPay.m.SummRest) < tempPay.SummPay)
+            {
+                MessageBox.Show("Сумма оплаты больше, чем остаток по счету");
+                return;
+            }
+            if (tempPay.Save(Id))
                 Reload();
             
         }

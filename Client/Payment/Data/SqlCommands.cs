@@ -54,9 +54,22 @@ delete from  [dbo].[tPayments] where ID=@DelID";
       ,[Summ] from dbo.[tPaymentMO] where ID=@ID";
 
         internal static string SaveItem = @"
-insert into dbo.[tPaymentMO] values (@ID, @OID, @MID, @Summ)
-
-
+if(((select top 1 SummRest from dbo.tMoney where ID=@MID)<@Summ) or ((select top 1 (Summ-SummPayed) from dbo.tOrders where ID=@OID)<@Summ))
+begin
+select 0
+end
+else
+begin
+if((select count(*) from dbo.[tPaymentMO] where ID=@ID and OrderID=@OID and MoneyID=@MID and Summ=@Summ)=0)
+begin
+insert into dbo.[tPaymentMO] values (@ID, @OID, @MID, @Summ);
+select 1
+end
+else
+begin 
+select 0
+end
+end
 ";
         internal static string DelItem = @"
 delete from dbo.[tPaymentMO] where ID=@ID and OrderID=@OID and MoneyID=@MID and Summ=@Summ

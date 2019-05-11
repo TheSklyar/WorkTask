@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Payment"
         mc:Ignorable="d"
-        Title="Платеж" Height="660" Width="705">
+        ResizeMode="NoResize"
+        Title="Платеж" Height="660" Width="705" WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        ShowInTaskbar="False">
     <StackPanel>
         <Grid Margin="5">
             <Grid.RowDefinitions>
