@@ -22,8 +22,8 @@ namespace Money.Bootstrap
             _factory = Guard.GetNotNull(factory, "factory");
 
             Ident = "{1934d486-3fab-41c4-93e2-43488dde73f1}";
-            Name = "Деньги";
-            Description = string.Format("Создание новых \"денег\" и их изменение");
+            Name = "Счета";
+            Description = string.Format("Создание нового счета и изменение");
             IsVisibleToUser = true;
         }
 

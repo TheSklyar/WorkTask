@@ -274,11 +274,24 @@ namespace Money
                         }
 
                         _connection.Open();
-                        if (0 == command.ExecuteNonQuery())
+                        try
                         {
-                            MessageBox.Show("Внимание! Данные деньги используются в платеже и не могут быть удалены без освобождения!");
+                            if (0 == command.ExecuteNonQuery())
+                            {
+                                MessageBox.Show(
+                                    "Внимание! Данные деньги используются в платеже и не могут быть удалены без освобождения!");
+                            }
                         }
-                        _connection.Close();
+                        catch
+                        {
+                            MessageBox.Show(
+                                "Внимание! Данные деньги используются в платеже и не могут быть удалены без освобождения!");
+                        }
+                        finally
+                        {
+                            _connection.Close();
+                        }
+                        
                     }
                     UpdatePageCount();
                     UpdateGrid();

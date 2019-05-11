@@ -177,8 +177,15 @@ namespace Order
                         command.Parameters.AddWithValue("@SummPayed", 0);
                     }
                     _connection.Open();
-                    count = command.ExecuteNonQuery();
-                    _connection.Close();
+                    try
+                    {
+                        count = Convert.ToInt32(command.ExecuteScalar());
+                    }
+                    finally
+                    {
+                        _connection.Close();
+                    }
+                    
 
                 }
                 if (count == 0)
@@ -189,6 +196,8 @@ namespace Order
                 {
                     MessageBox.Show("Успешно сохранено!");
                     type = OpenType.Edit;
+                    ID.Text = count.ToString();
+                    SummValPayed.Text = "0";
                 }
                 
             }

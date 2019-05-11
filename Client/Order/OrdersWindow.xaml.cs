@@ -275,11 +275,23 @@ namespace Order
                         }
 
                         _connection.Open();
-                        if (0==command.ExecuteNonQuery())
+                        try
                         {
-                            MessageBox.Show("Внимание! Данный заказ используется в платеже и не может быть удален без освобождения!");
+                            if (0 == command.ExecuteNonQuery())
+                            {
+                                MessageBox.Show(
+                                    "Внимание! Данный заказ используется в платеже и не может быть удален без освобождения!");
+                            }
                         }
-                        _connection.Close();
+                        catch
+                        {
+                            MessageBox.Show(
+                                "Внимание! Данный заказ используется в платеже и не может быть удален без освобождения!");
+                        }
+                        finally
+                        {
+                            _connection.Close();
+                        }
                     }
                     UpdatePageCount();
                     UpdateGrid();

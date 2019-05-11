@@ -37,6 +37,6 @@ namespace Money.Data
         internal static string DeleteCard = @"delete from  dbo.tMoney where ID=@DelID";
         internal static string SelectOrderByID = @"select Date, Summ, SummRest from dbo.tMoney where ID=@ID";
         internal static string Update = @"update dbo.tMoney set Date=@Date, Summ=@Summ, SummRest=@SummPayed where ID=@ID";
-        internal static string SaveNew = @"insert into dbo.tMoney values (@Date, @Summ, @SummPayed)";
+        internal static string SaveNew = @"insert into dbo.tMoney values (@Date, @Summ, @SummPayed); select @@identity";
     }
 }

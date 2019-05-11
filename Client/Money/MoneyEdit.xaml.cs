@@ -77,7 +77,7 @@ namespace Money
                     }
                     else
                     {
-                        throw new Exception("Деньги не найдены");
+                        throw new Exception("Счет не найден");
                     }
                 }
                 _connection.Close();
@@ -177,8 +177,14 @@ namespace Money
                         command.Parameters.AddWithValue("@SummPayed", newsumm);
                     }
                     _connection.Open();
-                    count = command.ExecuteNonQuery();
-                    _connection.Close();
+                    try
+                    {
+                        count = Convert.ToInt32(command.ExecuteScalar());
+                    }
+                    finally
+                    {
+                        _connection.Close();
+                    }
 
                 }
                 if (count == 0)
@@ -189,6 +195,8 @@ namespace Money
                 {
                     MessageBox.Show("Успешно сохранено!");
                     type = OpenType.Edit;
+                    ID.Text = count.ToString();
+                    SummValPayed.Text = SummVal.Text;
                 }
 
             }

@@ -32,9 +32,10 @@ namespace Payment.Data
             WHERE RowNumber BETWEEN @RowStart
 		            AND @RowEnd order by RowNumber";
 
-        internal static string DeleteCard = @"delete from  [dbo].[tPaymentMO] where ID=@DelID
+        internal static string DeleteCard = @"delete from  [dbo].[tPaymentMO] where ID=@DelID;
 delete from  [dbo].[tPayments] where ID=@DelID";
-        internal static string SaveNew = @"insert into  [dbo].[tPayments] values (@Summ)";
+        internal static string SaveNew = @"insert into  [dbo].[tPayments] values (0); select @@identity";
+
         internal static string GetAllIDsByOrder = @"
             SELECT distinct ID FROM [dbo].[tPaymentMO] where OrderID=@ID
             ";
@@ -48,5 +49,20 @@ delete from  [dbo].[tPayments] where ID=@DelID";
 
         internal static string GetOrderByID = @"select [Summ]
       ,[SummPayed] from dbo.tOrders where ID=@ID";
+
+        internal static string GetAllDataByID = @"select [MoneyID],[OrderID]
+      ,[Summ] from dbo.[tPaymentMO] where ID=@ID";
+
+        internal static string SaveItem = @"
+insert into dbo.[tPaymentMO] values (@ID, @OID, @MID, @Summ)
+
+
+";
+        internal static string DelItem = @"
+delete from dbo.[tPaymentMO] where ID=@ID and OrderID=@OID and MoneyID=@MID and Summ=@Summ
+";
+        
+
+
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Payment"
         mc:Ignorable="d"
-        Title="Платеж" Height="655" Width="705">
+        Title="Платеж" Height="660" Width="705">
     <StackPanel>
         <Grid Margin="5">
             <Grid.RowDefinitions>
@@ -18,21 +18,21 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="ID" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="2,7,0,7"/>
-            <TextBox Grid.Column="1" Grid.Row="0" Name="IDField" Width="90" TextAlignment="Center" FontSize="12" HorizontalAlignment="Left" Margin="2" IsReadOnly="True"/>
+            <TextBox Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" Name="IDField" Width="90" TextAlignment="Center" FontSize="12" HorizontalAlignment="Left" Margin="2" IsReadOnly="True"/>
             <TextBlock Grid.Column="2" Grid.Row="0" Text="Сумма" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2,7,0,7"/>
-            <TextBox Grid.Column="3" Grid.Row="0"  IsReadOnly="True" HorizontalAlignment="Left" Name="SummField" FontSize="12" Width="150" Margin="2"/>
+            <TextBox Grid.Column="3" Grid.Row="0"  IsReadOnly="True" Text="0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Name="SummField" FontSize="12" Width="150" Margin="2"/>
 
         </Grid>
         <Border BorderBrush="LightGray" BorderThickness="2" HorizontalAlignment="Left" Margin="5">
             <StackPanel>
                 <Label Content="Оплаты" FontSize="12" />
-                <ListView Name="PayList" Height="425" Width="670" Margin="5"/>
+                <ListView Name="PayList" Height="420" Width="665" Margin="5"/>
                 
             </StackPanel>
 
         </Border>
-        <DockPanel Margin="5">
-            <StackPanel>
+        <DockPanel Margin="5" Name="DockBottom">
+            <StackPanel >
                 <DockPanel  Margin="5,0,10,4"  HorizontalAlignment="Left">
                     <TextBlock Text="№ Заказа" Width="75" FontSize="12" VerticalAlignment="Center"  Margin="2"/>
                     <TextBox Name="OrderID" Height="25" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" MinWidth="100" MaxWidth="100" MaxLength="9" IsReadOnly="True"  Margin="2"/>

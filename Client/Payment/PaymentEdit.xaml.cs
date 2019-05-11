@@ -27,6 +27,7 @@ namespace Payment
     {
         private ConnectionSettings _connectionSettings;
         private OpenType type;
+        private int Id;
         public PaymentEdit(ConnectionSettings connectionSettings, OpenType type, int id = 0)
         {
             _connectionSettings = connectionSettings;
@@ -34,12 +35,12 @@ namespace Payment
             InitializeComponent();
             if (type == OpenType.View)
             {
-                AddButton.Visibility = Visibility.Hidden;
+                DockBottom.Visibility = Visibility.Hidden;
                 IDField.Text = id.ToString();
             }
             else
             {
-                AddButton.Visibility = Visibility.Visible;
+                DockBottom.Visibility = Visibility.Visible;
                 if (id != 0)
                 {
                     IDField.Text = id.ToString();
@@ -52,7 +53,32 @@ namespace Payment
             else
             {
                 SummField.Text = "0";
+                var _connection = new SqlConnection(_connectionSettings.ConnectionString);
+                using (var command = new SqlCommand(SqlCommands.SaveNew, _connection))
+                {
+                    _connection.Open();
+                    id = Convert.ToInt32(command.ExecuteScalar());
+                    _connection.Close();
+                }
+
+                if (id != 0)
+                {
+                    FillData(id);
+                }
+                
             }
+
+            Id = id;
+        }
+
+        private void Reload()
+        {
+            type = OpenType.Edit;
+            PayList.Items.Clear();
+            PayPanels = new Dictionary<string, DockPanel>();
+            Pays = new Dictionary<string, Pay>();
+            SummField.Text = "0";
+            FillData(Id);
         }
 
         private void FillData(int id)
@@ -62,14 +88,14 @@ namespace Payment
             {
                 if (!command.Parameters.Contains("@ID"))
                 {
-                    command.Parameters.AddWithValue("@ID", UserID);
+                    command.Parameters.AddWithValue("@ID", id);
                 }
                 _connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        AddDepartment(reader.IsDBNull(0) ? "" : reader.GetString(0));
+                        AddData(reader.GetInt32(0), reader.GetInt32(1), reader.GetDecimal(2));
                     }
                 }
                 _connection.Close();
@@ -78,6 +104,24 @@ namespace Payment
 
         private void AddData(int mID, int oID, decimal summ)
         {
+            var tempPay = new Pay(_connectionSettings, mID, oID, summ);
+            Pays.Add(tempPay.ToString(), tempPay);
+            PayPanels.Add(tempPay.ToString(), tempPay.Create());
+            tempPay.Button.Click += (o, args) =>
+            {
+                if (tempPay.Delete(Id))
+                {
+                    PayList.Items.Remove(PayPanels[tempPay.ToString()]);
+                    PayPanels.Remove(tempPay.ToString());
+                    Pays.Remove(tempPay.ToString());
+                }
+            };
+            tempPay.Button.Visibility = type == OpenType.View ? Visibility.Collapsed : Visibility.Visible;
+            PayList.Items.Add(PayPanels[tempPay.ToString()]);
+            SummField.Text =
+                (Convert.ToDecimal(
+                    Extensions.PrepareStringToConvert(string.IsNullOrEmpty(SummField.Text) ? "0" : SummField.Text)) +
+                summ).ToString();
 
         }
 
@@ -88,7 +132,7 @@ namespace Payment
                 MessageBox.Show("Заказ, дееньги и сумма должны быть указаны!");
                 return;
             }
-            var tempPay = new Pay(_connectionSettings, tempMonID, tempOrdID, Convert.ToDecimal());
+            var tempPay = new Pay(_connectionSettings, tempMonID, tempOrdID, Convert.ToDecimal(Extensions.PrepareStringToConvert(string.IsNullOrEmpty(Summ.Text) ? "0" : Summ.Text)));
             if (tempPay.o is null || tempPay.m is null)
             {
                 return;
@@ -99,28 +143,21 @@ namespace Payment
                 MessageBox.Show("Такой элемент уже есть в списке!");
                 return;
             }
-            Pays.Add(tempPay.ToString(), tempPay);
-            PayPanels.Add(tempPay.ToString(), tempPay.Create());
-            tempPay.Button.Click += (o, args) =>
-            {
-                PayList.Items.Remove(PayPanels[tempPay.ToString()]);
-                PayPanels.Remove(tempPay.ToString());
-                Pays.Remove(tempPay.ToString());
-            };
-            tempPay.Button.Visibility = type == OpenType.View ? Visibility.Collapsed : Visibility.Visible;
-            PayList.Items.Add(PayPanels[tempPay.ToString()]);
+            if(tempPay.Save(Id))
+                Reload();
+            
         }
         public Dictionary<string, Pay> Pays = new Dictionary<string, Pay>();
         public Dictionary<string, DockPanel> PayPanels = new Dictionary<string, DockPanel>();
 
         private void TextBox_MouseEnter(object sender, MouseEventArgs e)
         {
-            TextBox dgc = sender as TextBox;
+            TextBlock dgc = sender as TextBlock;
             var tt = new ToolTip();
             var toolTipPanel = new StackPanel();
             toolTipPanel.Children.Add(new TextBlock { Text = "Сумма должна быть меньше либо равна остатку выплат по заказу и остатка выбранных денег", FontSize = 10, MaxWidth = 500, TextWrapping = TextWrapping.Wrap });
             tt.Content = toolTipPanel;
-            dgc.ToolTip = tt;
+            if (dgc != null) dgc.ToolTip = tt;
         }
 
         private int tempMonID=0, tempOrdID=0;
@@ -135,6 +172,9 @@ namespace Payment
                 OrderID.Text = tempOrdID.ToString();
             }
             TemporaryStorage.Holder.Remove("ID");
+            var temp = new Data.Order(_connectionSettings, tempOrdID);
+            OrderInfo.Text = "Осталось выплатить: " + (temp.Summ-temp.SummPayed);
+            temp = null;
         }
 
         private void Mon_click(object sender, RoutedEventArgs e)
@@ -148,6 +188,9 @@ namespace Payment
                 MoneyID.Text = tempMonID.ToString();
             }
             TemporaryStorage.Holder.Remove("ID");
+            var temp = new Data.Money(_connectionSettings, tempMonID);
+            MoneyInfo.Text = "Осталось на счету: " + (temp.SummRest);
+            temp = null;
         }
     }
 }

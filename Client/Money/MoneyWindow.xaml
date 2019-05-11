@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Money"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Деньги" Height="700" Width="850" WindowStartupLocation="CenterScreen"
+        Title="Счета" Height="700" Width="850" WindowStartupLocation="CenterScreen"
         UseLayoutRounding="True"
         ShowInTaskbar="False">
     <Window.Content>
@@ -67,7 +67,7 @@
                         <DockPanel>
                             <Button Content="Отобразить" FontSize="12" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Click="Filter_Click"/>
                             <Button Content="Очистить фильтры" FontSize="12" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Click="Clear_Filter_Click"/>
-                            <Button Content="Новые &quot;Деньги&quot;" Name="New_Button" Visibility="Visible" FontSize="12" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Click="Create_Click"/>
+                            <Button Content="Новые счета" Name="New_Button" Visibility="Visible" FontSize="12" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Click="Create_Click"/>
                             <Button Content="Редактировать" Name="Edit_Button" Visibility="Visible" FontSize="12" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,5,5" Click="Edit_Click"/>
                             <Button Content="Удалить" Name="Delete_Button" Visibility="Visible" FontSize="12" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Click="Delete_Click"/>
                         </DockPanel>

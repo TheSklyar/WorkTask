@@ -1,22 +1,30 @@
-CREATE TRIGGER Payments_DELETE
+create TRIGGER Payments_DELETE
 ON dbo.tPaymentMO
 AFTER Delete
 AS
 begin
-declare @MoneyID int;
-declare @OrderID int;
-declare @DeletedID int;
-declare @Summ numeric(10,2);
-select @DeletedID=ID, @Summ=Summ FROM deleted;
-select @MoneyID=MoneyID from dbo.tPaymentMO WHERE Id = @DeletedID;
-select @OrderID=OrderID from dbo.tPaymentMO WHERE Id = @DeletedID;
-UPDATE dbo.tOrders
-SET SummPayed = SummPayed - @Summ
-WHERE Id = @OrderID
-UPDATE dbo.tMoney
-SET SummRest = SummRest + @Summ
-WHERE Id = @MoneyID
-UPDATE dbo.tPayments
-SET Summ = Summ - @Summ
-WHERE Id = @DeletedID
+UPDATE
+    tor
+SET
+    tor.SummPayed =  tor.SummPayed-summa
+FROM
+    dbo.tOrders AS tor
+    JOIN (select OrderID,  SUM(Summ) as summa from deleted group by OrderID ) AS ins
+        ON tor.id = ins.OrderID
+UPDATE
+    tor
+SET
+    tor.SummRest =  tor.SummRest+summa
+FROM
+    dbo.tMoney AS tor
+    JOIN (select MoneyID,  SUM(Summ) as summa from deleted group by MoneyID ) AS ins
+        ON tor.id = ins.MoneyID
+UPDATE
+    tor
+SET
+    tor.Summ =  tor.Summ-ins.Summ
+FROM
+    dbo.tPayments AS tor
+    JOIN deleted AS ins
+        ON tor.id = ins.ID
 end

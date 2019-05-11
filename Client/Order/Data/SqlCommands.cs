@@ -37,6 +37,6 @@ namespace Order.Data
         internal static string DeleteCard = @"delete from  dbo.tOrders where ID=@DelID";
         internal static string SelectOrderByID = @"select Date, Summ, SummPayed from dbo.tOrders where ID=@ID";
         internal static string Update = @"update dbo.tOrders set Date=@Date, Summ=@Summ, SummPayed=@SummPayed where ID=@ID";
-        internal static string SaveNew = @"insert into dbo.tOrders values (@Date, @Summ, @SummPayed)";
+        internal static string SaveNew = @"insert into dbo.tOrders values (@Date, @Summ, @SummPayed); select @@identity";
     }
 }

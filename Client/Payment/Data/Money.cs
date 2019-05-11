@@ -15,6 +15,10 @@ namespace Payment.Data
         public decimal Summ { get; set; }
         public decimal SummRest { get; set; }
         private ConnectionSettings _connectionSettings;
+        public override string ToString()
+        {
+            return "Счет номер " + ID + " Сумма " + Summ + " Осталось " + SummRest+"\n";
+        }
         public Money(ConnectionSettings connectionSettings, int id)
         {
             _connectionSettings = connectionSettings;

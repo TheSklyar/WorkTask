@@ -14,6 +14,11 @@ namespace Payment.Data
         public decimal Summ { get; set; }
         public decimal SummPayed { get; set; }
         private ConnectionSettings _connectionSettings;
+        public override string ToString()
+        {
+            return "Заказ номер " + ID + " Сумма " + Summ + " Уплачено " + SummPayed+"\n";
+        }
+
         public Order(ConnectionSettings connectionSettings, int id)
         {
             _connectionSettings = connectionSettings;
