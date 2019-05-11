@@ -130,7 +130,7 @@ namespace Payment
         {
             if (tempMonID == 0 || tempOrdID == 0 || Summ.Text=="")
             {
-                MessageBox.Show("Заказ, дееньги и сумма должны быть указаны!");
+                MessageBox.Show("Заказ, деньги и сумма должны быть указаны!");
                 return;
             }
             var tempPay = new Pay(_connectionSettings, tempMonID, tempOrdID, Convert.ToDecimal(Extensions.PrepareStringToConvert(string.IsNullOrEmpty(Summ.Text) ? "0" : Summ.Text)));
@@ -148,11 +148,19 @@ namespace Payment
             if ((tempPay.o.Summ - tempPay.o.SummPayed) < tempPay.SummPay)
             {
                 MessageBox.Show("Сумма оплаты больше, чем остаток по заказу");
+                Data.Money temp1 = new Data.Money(_connectionSettings, tempMonID);
+                MoneyInfo.Text = "Осталось на счету: " + (temp1.SummRest);
+                Data.Order temp2 = new Data.Order(_connectionSettings, tempOrdID);
+                OrderInfo.Text = "Осталось выплатить: " + (temp2.Summ - temp2.SummPayed);
                 return;
             }
             if ((tempPay.m.SummRest) < tempPay.SummPay)
             {
                 MessageBox.Show("Сумма оплаты больше, чем остаток по счету");
+                Data.Money temp1 = new Data.Money(_connectionSettings, tempMonID);
+                MoneyInfo.Text = "Осталось на счету: " + (temp1.SummRest);
+                Data.Order temp2 = new Data.Order(_connectionSettings, tempOrdID);
+                OrderInfo.Text = "Осталось выплатить: " + (temp2.Summ - temp2.SummPayed);
                 return;
             }
             if (tempPay.Save(Id))
